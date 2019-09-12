@@ -5,10 +5,10 @@ import (
 )
 
 type Options struct {
-	Env string
+	Env       string
 	Classpath string
-	Class string
-	Args []string
+	Class     string
+	Args      []string
 }
 
 func build(options *Options) *cli.App {
@@ -21,7 +21,10 @@ func build(options *Options) *cli.App {
 
 	cliApp.Action = func(c *cli.Context) {
 		if c.GlobalBool("help") {
-			cli.ShowAppHelp(c)
+			e := cli.ShowAppHelp(c)
+			if e != nil {
+				panic(e)
+			}
 			cli.OsExiter(1)
 		}
 		args := c.Args()
@@ -31,7 +34,7 @@ func build(options *Options) *cli.App {
 		}
 	}
 
-	cliApp.Flags = []cli.Flag {
+	cliApp.Flags = []cli.Flag{
 		cli.BoolFlag{
 			Name:  "help, h",
 			Usage: "show help",

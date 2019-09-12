@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 	//prompt "github.com/c-bata/go-prompt"
 )
 
@@ -17,6 +18,8 @@ func main() {
 
 	fmt.Println("env: " + op.Env)
 	fmt.Println("cp: " + op.Classpath)
+	fmt.Println("class: " + op.Class)
+	fmt.Println("args: " + strings.Join(op.Args, ","))
 
 	//cliApp := build(app)
 	//suggests := make([]prompt.Suggest, 0)
