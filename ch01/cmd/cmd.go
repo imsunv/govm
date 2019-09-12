@@ -1,27 +1,37 @@
 package main
 
-import "github.com/urfave/cli"
+import (
+	"github.com/urfave/cli"
+)
 
 type Options struct {
-	Env       string
+	Env string
 	Classpath string
+	Class string
+	Args []string
 }
 
 func build(options *Options) *cli.App {
 
 	cliApp := cli.NewApp()
 	cliApp.Name = "govm"
-	cliApp.Version = "v1"
+	cliApp.Version = "v2"
 	cliApp.HideHelp = true
+	cliApp.EnableBashCompletion = true
 
 	cliApp.Action = func(c *cli.Context) {
 		if c.GlobalBool("help") {
 			cli.ShowAppHelp(c)
 			cli.OsExiter(1)
 		}
+		args := c.Args()
+		if len(args) > 0 {
+			options.Class = args[0]
+			options.Args = args[1:]
+		}
 	}
 
-	cliApp.Flags = []cli.Flag{
+	cliApp.Flags = []cli.Flag {
 		cli.BoolFlag{
 			Name:  "help, h",
 			Usage: "show help",
